@@ -38,7 +38,6 @@ def get_access_token():
 def invoke_api():
     apis = [
         'https://graph.microsoft.com/v1.0/groups',
-        'https://graph.microsoft.com/v1.0/groups',
         'https://graph.microsoft.com/v1.0/sites/root',
         'https://graph.microsoft.com/v1.0/sites/root/sites',
         'https://graph.microsoft.com/v1.0/sites/root/drives',
