@@ -72,11 +72,15 @@ def invoke_api():
     }
 
     for period in range(random.randint(10, 50)):
+        print('========================================')
         random.shuffle(apis)
         for idx, api in enumerate(apis):
             try:
                 if requests.get(api, headers=headers).status_code == 200:
-                    print('周期 %2d, API %2d 调用成功'.format(period + 1, idx + 1))
+                    print('{:>15s} | {:<15s}'.format(
+                        f'周期 {period + 1}',
+                        f'API {idx + 1} 调用成功')
+                    )
             except Exception:
                 pass
         print('========================================')
