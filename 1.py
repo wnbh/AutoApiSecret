@@ -77,9 +77,9 @@ def invoke_api():
         for idx, api in enumerate(apis):
             try:
                 if requests.get(api, headers=headers).status_code == 200:
-                    print('{:>15s} | {:<15s}'.format(
+                    print('{:>10s} | {:<30s}'.format(
                         f'周期 {period + 1}',
-                        f'API {idx + 1} 调用成功')
+                        f'{api} 调用成功')
                     )
             except Exception:
                 pass
