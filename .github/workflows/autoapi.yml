@@ -1,0 +1,47 @@
+name: Auto Api Secret
+
+on: 
+  schedule:
+    - cron: '0 */5 * * *'
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+            ref: master
+      
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      
+      - name: Install requests
+        run: pip install requests
+      
+      - name: Test Api
+        env:
+          CLIENT_ID: ${{ secrets.CONFIG_ID }}
+          CLIENT_SECRET: ${{ secrets.CONFIG_KEY }}
+        run: python 1.py
+      
+      - name: Commit
+        run: |
+          git config user.email AutoupdateRobot@email.com
+          git config user.name AutoupdateRobot
+          git config pull.rebase true
+          rm -f .git/index
+          git reset
+          git stash
+          git pull
+          git checkout --orphan latest_branch
+          git add -A
+          git commit -m "update new refresh_token"
+          git branch -D master
+          git branch -m master
+          git push -f origin master
