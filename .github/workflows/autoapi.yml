@@ -30,18 +30,10 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CONFIG_KEY }}
         run: python 1.py
       
-      - name: Commit
+      - name: Commit and Push
         run: |
           git config user.email AutoupdateRobot@email.com
           git config user.name AutoupdateRobot
-          git config pull.rebase true
-          rm -f .git/index
-          git reset
-          git stash
-          git pull
-          git checkout --orphan latest_branch
           git add -A
           git commit -m "update new refresh_token"
-          git branch -D master
-          git branch -m master
           git push -f origin master
