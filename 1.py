@@ -37,7 +37,7 @@ def get_access_token():
 
 def invoke_api():
     apis = [
-        'https://graph.microsoft.com/v1.0/users',
+        'https://graph.microsoft.com/v1.0/groups',
         'https://graph.microsoft.com/v1.0/groups',
         'https://graph.microsoft.com/v1.0/sites/root',
         'https://graph.microsoft.com/v1.0/sites/root/sites',
@@ -72,18 +72,17 @@ def invoke_api():
     }
 
     for period in range(random.randint(10, 50)):
-        print('========================================')
+        print('======================================================================================')
         random.shuffle(apis)
-        for idx, api in enumerate(apis):
+        for api in apis:
             try:
                 if requests.get(api, headers=headers).status_code == 200:
-                    print('{:>10s} | {:<30s}'.format(
-                        f'周期 {period + 1}',
-                        f'{api} 调用成功')
+                    print('{:>5s} | {:<50s}'.format(
+                        f'周期: {period + 1}',
+                        f'成功: {api}')
                     )
             except Exception:
                 pass
-        print('========================================')
 
 
 if __name__ == '__main__':
